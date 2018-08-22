@@ -8,9 +8,9 @@ final class ListStackSpec extends PropSpec with PropertyChecks with Matchers {
     ListStack() should be (empty)
   }
   
-  property("startsWith") {
-    forAll { (a: String, b: String) =>
-      (a+b) should startWith (a)
+  property("Top after push") {
+    forAll { (xs: List[Int], x: Int) =>
+      ListStack(xs: _*).push(x).top.get should be (x)
     }
   }
 }
