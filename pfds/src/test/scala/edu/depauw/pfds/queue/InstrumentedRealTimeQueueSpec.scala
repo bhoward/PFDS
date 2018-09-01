@@ -15,7 +15,7 @@ final class InstrumentedRealTimeQueueSpec extends PropSpec with PropertyChecks w
     }
     
     for (i <- 1 to 1000) {
-      q.head.get should be (i)
+      q.head should be (Some(i))
       q = q.dequeue.get
     }
     
