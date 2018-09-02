@@ -6,14 +6,14 @@ package edu.depauw.pfds.stack
  * All operations are worst-case O(1).
  */
 object ListStack {
-  private class ListStack[T](xs: List[T]) extends Stack[T] {
+  private class Impl[T](xs: List[T]) extends Stack[T] {
     def isEmpty: Boolean = xs.isEmpty
 
-    def push[U >: T](x: U): Stack[U] = new ListStack(x :: xs)
+    def push[U >: T](x: U): Stack[U] = new Impl(x :: xs)
 
     def pop: Option[Stack[T]] = xs match {
       case Nil       => None
-      case _ :: rest => Some(new ListStack(rest))
+      case _ :: rest => Some(new Impl(rest))
     }
 
     def top: Option[T] = xs match {
@@ -25,5 +25,5 @@ object ListStack {
       xs.mkString("ListStack(", ", ", ")")
   }
 
-  def apply[T](xs: T*): Stack[T] = new ListStack(xs.toList)
+  def apply[T](xs: T*): Stack[T] = new Impl(xs.toList)
 }

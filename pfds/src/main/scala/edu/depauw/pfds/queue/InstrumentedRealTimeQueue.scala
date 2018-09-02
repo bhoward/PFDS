@@ -64,8 +64,8 @@ object InstrumentedRealTimeQueue {
       (front ++ rear.reverse).mkString("RealTimeQueue(", ", ", ")")
   }
 
-  def apply[T](xs: T*)(recorder: Recorder): Queue[T] = {
+  def apply[T](xs: T*)(implicit recorder: Recorder): Queue[T] = {
     val s = xs.toStream
-    new Impl(s, Nil, s)(recorder)
+    new Impl(s, Nil, s)
   }
 }

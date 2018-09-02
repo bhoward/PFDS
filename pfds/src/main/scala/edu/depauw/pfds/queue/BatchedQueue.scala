@@ -8,16 +8,16 @@ package edu.depauw.pfds.queue
  * Source: Okasaki1998
  */
 object BatchedQueue {
-  private class BatchedQueue[T](front: List[T], rear: List[T]) extends Queue[T] {
+  private class Impl[T](front: List[T], rear: List[T]) extends Queue[T] {
     // The contents of the queue are front ++ rear.reverse
     // Invariant: if front is empty, then so is rear
     def isEmpty: Boolean = front.isEmpty
 
-    def enqueue[U >: T](x: U): Queue[U] = new BatchedQueue(front, x :: rear).fix
+    def enqueue[U >: T](x: U): Queue[U] = new Impl(front, x :: rear).fix
 
     def dequeue: Option[Queue[T]] = front match {
       case Nil       => None
-      case _ :: rest => Some(new BatchedQueue(rest, rear).fix)
+      case _ :: rest => Some(new Impl(rest, rear).fix)
     }
 
     def head: Option[T] = front match {
@@ -25,8 +25,8 @@ object BatchedQueue {
       case first :: _ => Some(first)
     }
 
-    private def fix: BatchedQueue[T] = front match {
-      case Nil => new BatchedQueue(rear.reverse, Nil)
+    private def fix: Impl[T] = front match {
+      case Nil => new Impl(rear.reverse, Nil)
       case _   => this
     }
 
@@ -34,5 +34,5 @@ object BatchedQueue {
       (front ++ rear.reverse).mkString("BatchedQueue(", ", ", ")")
   }
 
-  def apply[T](xs: T*): Queue[T] = new BatchedQueue(xs.toList, Nil)
+  def apply[T](xs: T*): Queue[T] = new Impl(xs.toList, Nil)
 }

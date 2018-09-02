@@ -33,6 +33,16 @@ final class ListStackSpec extends PropSpec with PropertyChecks with Matchers {
     }
   }
   
+  property("Stack reverses order") {
+    forAll { (xs: List[Int]) =>
+      var s = ListStack[Int]()
+      for (x <- xs) {
+        s = s.push(x)
+      }
+      stackToList(s) should be (xs.reverse)
+    }
+  }
+  
   property("Nonempty after push") {
     forAll { (xs: List[Int], x: Int) =>
       ListStack(xs: _*).push(x) should not be (empty)

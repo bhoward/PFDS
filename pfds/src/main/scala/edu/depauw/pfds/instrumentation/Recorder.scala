@@ -12,6 +12,11 @@ class Recorder {
     result
   }
   
+  def ticks[T](count: Int)(result: T): T = {
+    opTicks += count
+    result
+  }
+  
   def op[T](result: T): T = {
     ops += 1
     ticks += opTicks

@@ -5,10 +5,10 @@ import org.scalatest.prop.PropertyChecks
 
 import edu.depauw.pfds.instrumentation.Recorder
 
-final class InstrumentedRealTimeQueueSpec extends PropSpec with PropertyChecks with Matchers {
-  property("Queue should deliver all values in constant time") {
+final class InstrumentedBatchedQueueSpec extends PropSpec with PropertyChecks with Matchers {
+  property("Queue should deliver all values in amortized constant time") {
     implicit val recorder = new Recorder
-    var q: Queue[Int] = InstrumentedRealTimeQueue()
+    var q: Queue[Int] = InstrumentedBatchedQueue()
     
     for (i <- 1 to 1000) {
       q = q.enqueue(i)
@@ -19,6 +19,6 @@ final class InstrumentedRealTimeQueueSpec extends PropSpec with PropertyChecks w
       q = q.dequeue.get
     }
     
-    recorder.maximumTicksPerOp should (be <= 2)
+    recorder.maximumAverageTicksPerOp should (be <= 2)
   }
 }
