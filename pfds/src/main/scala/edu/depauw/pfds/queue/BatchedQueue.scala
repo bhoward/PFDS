@@ -2,7 +2,7 @@ package edu.depauw.pfds.queue
 
 /**
  * Pair-of-linked-lists implementation of a queue.
- * This is _not_ a persistent data structure.
+ * This is _not_ a persistent amortized data structure.
  * isEmpty, head, and enqueue are worst-case O(1);
  * dequeue is amortized O(1).
  * Source: Okasaki1998

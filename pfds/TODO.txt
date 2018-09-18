@@ -1,5 +1,4 @@
 Leftist Heap, Skew Heap
-BST, Red-Black Tree
 Banker's Deque, Real-Time Deque
 Binary Random-Access List (and Skew version?)
 Trie?
