@@ -7,7 +7,7 @@ import org.scalacheck.Gen
 import edu.depauw.pfds.instrumentation.Recorder
 
 final class InstrumentedRealTimeQueueSpec extends PropSpec with PropertyChecks with Matchers {
-  property("Queue should deliver all values in constant time") {
+  property("Real Time Queue should deliver all values in constant time") {
     implicit val recorder = new Recorder
     var q: Queue[Int] = InstrumentedRealTimeQueue()
 
@@ -25,7 +25,7 @@ final class InstrumentedRealTimeQueueSpec extends PropSpec with PropertyChecks w
 
   val sizes = for (n <- Gen.choose(10, 10000)) yield n
 
-  property("Queue is persistent") {
+  property("Real Time Queue is persistent") {
     forAll(sizes) { (n: Int) =>
       whenever(10 <= n && n <= 10000) {
         implicit val recorder = new Recorder

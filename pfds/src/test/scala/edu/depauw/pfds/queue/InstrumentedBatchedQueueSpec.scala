@@ -7,7 +7,7 @@ import org.scalacheck.Gen
 import edu.depauw.pfds.instrumentation.Recorder
 
 final class InstrumentedBatchedQueueSpec extends PropSpec with PropertyChecks with Matchers {
-  property("Queue should deliver all values in amortized constant time") {
+  property("Batched Queue should deliver all values in amortized constant time") {
     implicit val recorder = new Recorder
     var q: Queue[Int] = InstrumentedBatchedQueue()
 
@@ -25,7 +25,7 @@ final class InstrumentedBatchedQueueSpec extends PropSpec with PropertyChecks wi
 
   val sizes = for (n <- Gen.choose(10, 10000)) yield n
 
-  property("Queue is not persistent") {
+  property("Batched Queue is not persistent") {
     forAll(sizes) { (n: Int) =>
       whenever(10 <= n && n <= 10000) {
         implicit val recorder = new Recorder
