@@ -11,7 +11,7 @@ object BSTMap {
     def put[U >: V](key: K, value: U): BST[K, U]
   }
 
-  private case class Empty[K](implicit ord: Ordering[K]) extends BST[K, Nothing] {
+  private case class Empty[K]()(implicit ord: Ordering[K]) extends BST[K, Nothing] {
     def get(key: K): Option[Nothing] = None
 
     def put[V](key: K, value: V): BST[K, V] = Node(this, key, value, this)

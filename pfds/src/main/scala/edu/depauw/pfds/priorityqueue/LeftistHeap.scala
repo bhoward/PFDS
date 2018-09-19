@@ -25,7 +25,7 @@ object LeftistHeap {
     def merge(t: Heap[T]): Heap[T]
   }
 
-  private case class Empty[T](implicit ord: Ordering[T]) extends Heap[T] {
+  private case class Empty[T]()(implicit ord: Ordering[T]) extends Heap[T] {
     def isEmpty: Boolean = true
 
     def enqueue(x: T): Heap[T] = Node(1, this, x, this)

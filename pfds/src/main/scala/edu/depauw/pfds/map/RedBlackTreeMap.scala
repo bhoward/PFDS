@@ -18,7 +18,7 @@ object RedBlackTreeMap {
     def blacken: RBT[K, V]
   }
 
-  private case class Empty[K](implicit ord: Ordering[K]) extends RBT[K, Nothing] {
+  private case class Empty[K]()(implicit ord: Ordering[K]) extends RBT[K, Nothing] {
     def get(key: K): Option[Nothing] = None
 
     def put[V](key: K, value: V): RBT[K, V] = RedNode(this, key, value, this)
