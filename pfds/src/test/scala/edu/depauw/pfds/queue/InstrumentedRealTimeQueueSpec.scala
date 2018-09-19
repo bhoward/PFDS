@@ -40,7 +40,7 @@ final class InstrumentedRealTimeQueueSpec extends PropSpec with PropertyChecks w
           q2.head should be(Some(2))
         }
 
-        recorder.maximumAverageTicksPerOp should (be <= 2)
+        recorder.maximumTicksPerOp should (be <= 2)
       }
     }
   }
