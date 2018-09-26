@@ -20,18 +20,18 @@ object InstrumentedRealTimeQueue {
 
     def isEmpty: Boolean = front.isEmpty
 
-    def enqueue[U >: T](x: U): Queue[U] = recorder.op {
+    def enqueue[U >: T](x: U): Queue[U] = recorder.op(this) {
       new Impl(front, x :: rear, sched).exec
     }
 
-    def dequeue: Option[Queue[T]] = recorder.op {
+    def dequeue: Option[Queue[T]] = recorder.op(this) {
       front match {
         case Stream.Empty => None
         case _ #:: rest   => Some(new Impl(rest, rear, sched).exec)
       }
     }
 
-    def head: Option[T] = recorder.op {
+    def head: Option[T] = recorder.op(this) {
       front match {
         case Stream.Empty => None
         case first #:: _  => Some(first)

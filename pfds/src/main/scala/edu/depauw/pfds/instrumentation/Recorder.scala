@@ -6,6 +6,8 @@ class Recorder {
   private var opTicks: Int = 0
   private var maxOpTicks: Int = 0
   private var maxAvgTicks: Int = 0
+  private var maxOpTicksOp: Any = _
+  private var maxAvgTicksOp: Any = _
   
   def tick[T](result: T): T = {
     opTicks += 1
@@ -17,11 +19,26 @@ class Recorder {
     result
   }
   
-  def op[T](result: T): T = {
+//  def op[T](result: T): T = {
+//    ops += 1
+//    ticks += opTicks
+//    maxOpTicks = maxOpTicks max opTicks
+//    maxAvgTicks = maxAvgTicks max (ticks / ops)
+//    opTicks = 0
+//    result
+//  }
+  
+  def op[T](op: Any)(result: T): T = {
     ops += 1
     ticks += opTicks
-    maxOpTicks = maxOpTicks max opTicks
-    maxAvgTicks = maxAvgTicks max (ticks / ops)
+    if (opTicks > maxOpTicks) {
+      maxOpTicks = opTicks
+      maxOpTicksOp = op
+    }
+    if (ticks / ops > maxAvgTicks) {
+      maxAvgTicks = ticks / ops
+      maxAvgTicksOp = op
+    }
     opTicks = 0
     result
   }
@@ -31,4 +48,8 @@ class Recorder {
   def averageTicksPerOp: Int = ticks / ops
   
   def maximumAverageTicksPerOp: Int = maxAvgTicks
+  
+  def opWithMaxTicks: Any = maxOpTicksOp
+  
+  def opWithMaxAvgTicks: Any = maxAvgTicksOp
 }

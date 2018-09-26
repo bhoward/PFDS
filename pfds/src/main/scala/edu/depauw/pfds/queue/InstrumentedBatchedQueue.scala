@@ -17,18 +17,18 @@ object InstrumentedBatchedQueue {
     // Invariant: if front is empty, then so is rear
     def isEmpty: Boolean = front.isEmpty
 
-    def enqueue[U >: T](x: U): Queue[U] = recorder.op {
+    def enqueue[U >: T](x: U): Queue[U] = recorder.op(this) {
       new Impl(front, x :: rear).fix
     }
 
-    def dequeue: Option[Queue[T]] = recorder.op {
+    def dequeue: Option[Queue[T]] = recorder.op(this) {
       front match {
         case Nil       => None
         case _ :: rest => Some(new Impl(rest, rear).fix)
       }
     }
 
-    def head: Option[T] = recorder.op {
+    def head: Option[T] = recorder.op(this) {
       front match {
         case Nil        => None
         case first :: _ => Some(first)
